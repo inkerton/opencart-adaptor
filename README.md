@@ -187,12 +187,5 @@ PORT=                  # Server port (default: 3000)
 
 All optional variables have default values defined in `config/ondcConfig.js`.
 
-## Support
-
-For issues and support:
-- Create an issue in the repository
-- Contact the development team
-- Check ONDC documentation for protocol-specific queries
-
 
 <!-- ## License -->
