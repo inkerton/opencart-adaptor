@@ -1,85 +1,76 @@
 import axios from 'axios';
-import config from './config.js';
+import { ONDC_DEFAULTS } from '../config/ondcConfig.js';
 import logger from './logger.js';
 
 export const lookupPublicKeyByUkId = async (ukId) => {
   try {
-    // Make registry request
     const response = await axios.post(
-      `${config.ondc.registryUrl}/lookup`,
+      `${process.env.ONDC_REGISTRY_URL || ONDC_DEFAULTS.REGISTRY_URL}/lookup`,
       {
-        subscriber_id: config.ondc.subscriberId,
+        subscriber_id: process.env.ONDC_SUBSCRIPTION_ID,
         ukId,
-        domain: config.ondc.domain,
-        country: config.ondc.country,
-        city: config.ondc.city || "std:080",
+        domain: process.env.ONDC_DOMAIN || ONDC_DEFAULTS.DOMAIN,
+        country: process.env.ONDC_COUNTRY || ONDC_DEFAULTS.COUNTRY,
+        city: process.env.ONDC_CITY || ONDC_DEFAULTS.CITY,
         type: "BPP"
       },
       {
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${config.ondc.authToken}`
-        },
-        timeout: 5000
+          'Authorization': `Bearer ${process.env.ONDC_AUTH_TOKEN}`
+        }
       }
     );
 
-    // Validate response
     if (!response.data || !Array.isArray(response.data)) {
-      logger.warn('Invalid response format from registry', { 
-        status: response.status,
-        data: response.data 
-      });
+      logger.warn('Invalid response format from registry', { ukId });
       return null;
     }
 
-    // Find matching subscriber
-    const subscriberData = response.data.find(entry => entry.ukId === ukId);
-    if (!subscriberData) {
-      logger.warn('Subscriber not found in registry response', { 
-        subscriberId: config.ondc.subscriberId, 
+    const subscriber = response.data.find(entry => entry.ukId === ukId);
+    if (!subscriber) {
+      logger.warn('Subscriber not found in registry response', {
         ukId,
-        availableUkIds: response.data.map(d => d.ukId)
+        subscriberId: process.env.ONDC_SUBSCRIPTION_ID
       });
       return null;
     }
 
-    // Validate required fields
-    if (!subscriberData.signing_public_key) {
-      logger.warn('Subscriber found but missing signing_public_key', { 
-        subscriberId: config.ondc.subscriberId, 
-        ukId 
-      });
-      return null;
-    }
-
-    logger.info('Found public key in registry', { 
-      ukId, 
-      subscriber_id: config.ondc.subscriberId 
-    });
-    return subscriberData.signing_public_key;
+    return subscriber.signing_public_key || null;
 
   } catch (error) {
-    if (error.code === 'ECONNABORTED') {
-      logger.error('Registry lookup timed out', { 
-        subscriberId: config.ondc.subscriberId, 
-        ukId,
-        timeout: 5000 
-      });
-    } else if (error.response) {
-      logger.error('Registry lookup failed with response', {
-        status: error.response.status,
-        data: error.response.data,
-        subscriberId: config.ondc.subscriberId,
-        ukId
-      });
-    } else {
-      logger.error('Registry lookup failed', {
-        error: error.message,
-        subscriberId: config.ondc.subscriberId,
-        ukId
-      });
-    }
+    logger.error('Error looking up public key', {
+      ukId,
+      subscriberId: process.env.ONDC_SUBSCRIPTION_ID,
+      error: error.message
+    });
     return null;
   }
+};
+
+export const verifyPublicKey = async (ukId, publicKey) => {
+  try {
+    const registryKey = await lookupPublicKeyByUkId(ukId);
+    if (!registryKey) {
+      logger.warn('Could not verify key - registry lookup failed', {
+        ukId,
+        subscriberId: process.env.ONDC_SUBSCRIPTION_ID
+      });
+      return false;
+    }
+
+    return registryKey === publicKey;
+  } catch (error) {
+    logger.error('Error verifying public key', {
+      ukId,
+      subscriberId: process.env.ONDC_SUBSCRIPTION_ID,
+      error: error.message
+    });
+    return false;
+  }
+};
+
+export default {
+  lookupPublicKeyByUkId,
+  verifyPublicKey
 };

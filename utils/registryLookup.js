@@ -1,6 +1,5 @@
-// utils/registryLookup.js
 import axios from 'axios';
-import config from './config.js'; // Assuming you have a config.js with registryUrl
+import { ONDC_DEFAULTS } from '../config/ondcConfig.js';
 
 /**
  * Looks up a gateway subscriber in the ONDC Registry based on their subscriber ID (e.g., BAP ID).
@@ -10,7 +9,8 @@ import config from './config.js'; // Assuming you have a config.js with registry
  */
 export const lookupGatewaySubscriber = async (subscriberId, type = 'BAP') => {
   try {
-    const response = await axios.get(`${config.ondc.registryUrl}/lookup`, {
+    const registryUrl = process.env.ONDC_REGISTRY_URL || ONDC_DEFAULTS.REGISTRY_URL;
+    const response = await axios.get(`${registryUrl}/lookup`, {
       params: {
         subscriber_id: subscriberId,
         type: type
@@ -51,7 +51,8 @@ export const lookupRegistryCallbackUri = (subscriber) => {
  */
 export const lookupPublicKey = async (subscriberId, keyId, type = 'BPP') => {
   try {
-    const response = await axios.get(`${config.ondc.registryUrl}/lookup`, {
+    const registryUrl = process.env.ONDC_REGISTRY_URL || ONDC_DEFAULTS.REGISTRY_URL;
+    const response = await axios.get(`${registryUrl}/lookup`, {
       params: {
         subscriber_id: subscriberId,
         key_id: keyId,
@@ -69,5 +70,4 @@ export const lookupPublicKey = async (subscriberId, keyId, type = 'BPP') => {
     return null;
   }
 };
-
 export default { lookupGatewaySubscriber, lookupRegistryCallbackUri, lookupPublicKey };

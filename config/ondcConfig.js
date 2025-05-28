@@ -104,4 +104,43 @@ export const ondcConfig = {
   originDefaults: {
     country: "IND"
   }
-}; 
+};
+
+export const ONDC_DEFAULTS = {
+    // Registry configuration
+    REGISTRY_URL: 'https://registry.ondc.org',
+    DOMAIN: 'ONDC:RET14',
+    COUNTRY: 'IND',
+    CITY: 'std:080',
+    UK_ID: 'UKID1',
+   
+    // BPP configuration
+    BPP_ID: 'localhost:3000',
+    BPP_URI: 'http://localhost:3000',
+   
+    // Callback configuration
+    CALLBACK_RETRY_COUNT: 3,
+    CALLBACK_RETRY_DELAY: 5000, // milliseconds
+   
+    // Request timeouts
+    REGISTRY_TIMEOUT: 5000, // 5 seconds
+    REQUEST_TIMEOUT: 30000, // 30 seconds
+};
+
+// Required environment variables - these must be set in .env
+export const REQUIRED_ENV_VARS = [
+    'ONDC_SUBSCRIPTION_ID',
+    'ONDC_SIGNING_PRIVATE_KEY',
+    'ONDC_SIGNING_PUBLIC_KEY'
+];
+
+// Optional environment variables - these can use defaults if not set
+export const OPTIONAL_ENV_VARS = [
+    'ONDC_REGISTRY_URL',
+    'ONDC_DOMAIN',
+    'ONDC_COUNTRY',
+    'ONDC_CITY',
+    'ONDC_UK_ID',
+    'ONDC_BPP_ID',
+    'ONDC_BPP_URI'
+];

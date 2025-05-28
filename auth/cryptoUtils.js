@@ -1,31 +1,31 @@
 import crypto from 'crypto';
 import sodium from 'sodium-native';
 import logger from '../utils/logger.js';
-import config from '../utils/config.js';
+import { ONDC_DEFAULTS } from '../config/ondcConfig.js';
 
 /**
  * Sign a request payload for ONDC
  */
 const signRequest = (payload) => {
   try {
-    const privateKey = config.ondc.signingPrivateKey;
+    const privateKey = process.env.ONDC_SIGNING_PRIVATE_KEY;
     if (!privateKey) throw new Error('Signing private key not configured');
 
     const payloadString = typeof payload === 'string' ? payload : JSON.stringify(payload);
     const payloadBuffer = Buffer.from(payloadString, 'utf8');
 
-    // Generate Blake2b hash
+    // Blake2b hash
     const hash = generateBlake2bHash(payloadBuffer);
     const digest = hash.toString('base64');
 
-    // Generate Ed25519 signature
+    // Ed25519 signature
     const privateKeyBuffer = Buffer.from(privateKey, 'base64');
     const signature = Buffer.alloc(sodium.crypto_sign_BYTES);
     sodium.crypto_sign_detached(signature, payloadBuffer, privateKeyBuffer);
 
     const created = Math.floor(Date.now() / 1000);
     const expires = created + 300;
-    const keyId = `${config.ondc.subscriberId}|${config.ondc.ukId}|ed25519`;
+    const keyId = `${process.env.ONDC_SUBSCRIPTION_ID}|${process.env.ONDC_UK_ID || ONDC_DEFAULTS.UK_ID}|ed25519`;
 
     const authHeader = `Signature keyId="${keyId}",algorithm="ed25519",created="${created}",expires="${expires}",headers="(created) (expires) digest",signature="${signature.toString('base64')}",digest="${digest}"`;
 

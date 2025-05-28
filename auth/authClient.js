@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { signRequest } from './cryptoUtils.js';
-import config from '../utils/config.js';
 import logger from '../utils/logger.js';
+import { ONDC_DEFAULTS } from '../config/ondcConfig.js';
 
 const makeAuthenticatedRequest = async (url, payload, options = {}) => {
   try {
@@ -18,7 +18,7 @@ const makeAuthenticatedRequest = async (url, payload, options = {}) => {
       url,
       data: payload,
       headers,
-      timeout: options.timeout || 30000
+      timeout: options.timeout || ONDC_DEFAULTS.REQUEST_TIMEOUT
     });
 
     return response.data;

@@ -1,6 +1,7 @@
 import axios from 'axios';
-import config from './config.js';
 import logger from './logger.js'; // Assuming you have a logger
+import { ONDC_DEFAULTS } from '../config/ondcConfig.js';
+
 /**
  * Forwards an ONDC request to a specified BPP or BAP callback URI.
  * @param {string} callbackUrl The callback URL to forward the request to.
@@ -31,4 +32,23 @@ export const forwardRequest = async (callbackUrl, payload, headers = {}, timeout
   }
 };
 
-export default { forwardRequest };
+export const getRegistryUrl = () => process.env.ONDC_REGISTRY_URL || ONDC_DEFAULTS.REGISTRY_URL;
+
+export const getSubscriberId = () => {
+  const subscriberId = process.env.ONDC_SUBSCRIPTION_ID;
+  if (!subscriberId) throw new Error('ONDC_SUBSCRIPTION_ID not configured');
+  return subscriberId;
+};
+
+export const getDomain = () => process.env.ONDC_DOMAIN || ONDC_DEFAULTS.DOMAIN;
+export const getCountry = () => process.env.ONDC_COUNTRY || ONDC_DEFAULTS.COUNTRY;
+export const getCity = () => process.env.ONDC_CITY || ONDC_DEFAULTS.CITY;
+
+export default {
+  forwardRequest,
+  getRegistryUrl,
+  getSubscriberId,
+  getDomain,
+  getCountry,
+  getCity
+};
