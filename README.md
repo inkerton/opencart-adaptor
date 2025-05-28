@@ -1,5 +1,6 @@
 # OpenCart-ONDC Adaptor
 
+
 A Node.js based adaptor that enables OpenCart e-commerce stores to integrate with the Open Network for Digital Commerce (ONDC) network in India. This adaptor implements the ONDC protocol specifications and handles all necessary API interactions between OpenCart and the ONDC network.
 
 ## Core Capabilities
@@ -19,8 +20,9 @@ A Node.js based adaptor that enables OpenCart e-commerce stores to integrate wit
 - Order Cancellation (`/cancel`, `/on_cancel`)
 - Order Updates (`/update`, `/on_update`)
 - Status Checking (`/status`, `/on_status`)
-<!-- - Order Tracking (`/track`, `/on_track`) -->
 - Issue Management (`/issue`, `/on_issue`, `/issue_status`, `/on_issue_status`)
+<!-- - Order Tracking (`/track`, `/on_track`) -->
+
 
 ## Project Structure
 
@@ -55,12 +57,7 @@ cd opencart-adaptor
 npm install
 ```
 
-3. Configure environment variables:
-```bash
-cp .env.example .env
-```
-
-4. Update the .env file with your credentials:
+3. Update the .env file with your credentials:
 ```env
 PORT=                    # Server port (default: 3000)
 OPENCART_URL=            # Your OpenCart store URL
@@ -151,21 +148,41 @@ The adaptor implements comprehensive error management:
 
 ### Required Environment Variables
 ```env
-OPENCART_URL=            # OpenCart installation URL
-OPENCART_USERNAME=       # OpenCart API username
-OPENCART_API_KEY=        # OpenCart API key
-ONDC_SUBSCRIPTION_ID=    # Your ONDC subscriber/subscription ID
-ONDC_SIGNING_PRIVATE_KEY=# Your ONDC signing private key
+# ONDC Registry Configuration
 ONDC_REGISTRY_URL=       # ONDC registry URL
-ONDC_AUTH_TOKEN=         # ONDC authentication token
+ONDC_SUBSCRIPTION_ID=    # Your ONDC subscriber/subscription ID
+ONDC_UK_ID=             # Your ONDC unique key ID
+ONDC_AUTH_TOKEN=        # ONDC authentication token
+
+# ONDC Cryptographic Keys
+ONDC_SIGNING_PUBLIC_KEY=     # Your ONDC signing public key
+ONDC_SIGNING_PRIVATE_KEY=    # Your ONDC signing private key
+ONDC_ENCRYPTION_PUBLIC_KEY=  # Your ONDC encryption public key
+ONDC_ENCRYPTION_PRIVATE_KEY= # Your ONDC encryption private key
+
+# OpenCart Configuration
+OPENCART_SITE=          # OpenCart site URL
+OPENCART_USERNAME=      # OpenCart admin username
+OPENCART_KEY=           # OpenCart API key
+ADAPTOR_SITE=          # Adaptor site URL
+API_TOKEN=             # API authentication token
+
+# Database Configuration
+DB_HOST=               # Database host
+DB_USER=               # Database username
+DB_PASS=               # Database password
+DB_NAME=               # Database name
 ```
 
 ### Optional Environment Variables
 ```env
-PORT=                    # Server port (default: 3000)
-ONDC_DOMAIN=            # ONDC domain (default from ondcConfig.js)
-ONDC_COUNTRY=           # Country code (default from ondcConfig.js)
-ONDC_CITY=              # City code (default from ondcConfig.js)
+# ONDC Network Configuration
+ONDC_DOMAIN=           # ONDC domain (default from ondcConfig.js)
+ONDC_COUNTRY=          # Country code (default from ondcConfig.js)
+ONDC_CITY=             # City code (default from ondcConfig.js)
+
+# Server Configuration
+PORT=                  # Server port (default: 3000)
 ```
 
 All optional variables have default values defined in `config/ondcConfig.js`.
