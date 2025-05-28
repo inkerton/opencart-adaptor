@@ -91,8 +91,8 @@ const statusHandler = async (req, res) => {
         context: {
           ...context,
           action: "on_status",
-          bpp_id: process.env.BPP_ID,
-          bpp_uri: process.env.BPP_URI,
+          bpp_id: context?.bpp_id,
+          bpp_uri: context?.bpp_uri,
           timestamp: new Date().toISOString()
         },
         message: {

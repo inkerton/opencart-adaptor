@@ -12,14 +12,14 @@ export default {
     authToken: process.env.ONDC_AUTH_TOKEN,
     subscriberId: process.env.ONDC_SUBSCRIPTION_ID,
     participantId: process.env.ONDC_PARTICIPANT_ID,
-    bppId: process.env.ONDC_BPP_ID,
-    bppUri: process.env.ONDC_BPP_URI,
+    bppId: process.env.ONDC_BPP_ID || 'localhost:3000',
+    bppUri: process.env.ONDC_BPP_URI || 'http://localhost:3000',
     callbackRetryCount: parseInt(process.env.ONDC_CALLBACK_RETRY_COUNT || '3'),
     callbackRetryDelay: parseInt(process.env.ONDC_CALLBACK_RETRY_DELAY || '5000'),
     
     // ONDC Registry configuration
     registryUrl: process.env.ONDC_REGISTRY_URL || 'https://registry.ondc.org',
-    domain: process.env.ONDC_DOMAIN || 'ONDC:RET10',
+    domain: process.env.ONDC_DOMAIN || 'ONDC:RET14',
     country: process.env.ONDC_COUNTRY || 'IND',
     city: process.env.ONDC_CITY || 'std:080',
     

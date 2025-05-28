@@ -73,15 +73,15 @@ export default async function onSearchHandler(req, res) {
         const payload = req.body;
     
         try {
-            const opencartApiUrl = `${process.env.OPENCART_API_URL}/index.php?route=api/allproducts&json`;
+            const opencartApiUrl = `${process.env.OPENCART_SITE}/index.php?route=api/allproducts&json`;
             const response = await axios.get(opencartApiUrl);
             const opencartProducts = response.data.shop_products;
         
-            const opencartApiStoreInfo = `${process.env.OPENCART_API_URL}/index.php?route=api/allproducts/contact`;
+            const opencartApiStoreInfo = `${process.env.OPENCART_SITE}/index.php?route=api/allproducts/contact`;
             const store = await axios.get(opencartApiStoreInfo);
             const storeInfo = store.data;
         
-            const opencartApiCategories = `${process.env.OPENCART_API_URL}/index.php?route=api/allproducts/categories&json`;
+            const opencartApiCategories = `${process.env.OPENCART_SITE}/index.php?route=api/allproducts/categories&json`;
             const categories = await axios.get(opencartApiCategories);
             const categoriesInfo = categories.data;
         
@@ -125,8 +125,8 @@ export default async function onSearchHandler(req, res) {
                     core_version: payload.context.core_version,
                     bap_id: payload.context.bap_id,
                     bap_uri: payload.context.bap_uri,
-                    bpp_id: process.env.BPP_ID,
-                    bpp_uri: process.env.BPP_URI,
+                    bpp_id: payload.context?.bpp_id,
+                    bpp_uri: payload.context?.bpp_uri,
                     transaction_id: payload.context.transaction_id,
                     message_id: payload.context.message_id,
                     timestamp: new Date().toISOString(),

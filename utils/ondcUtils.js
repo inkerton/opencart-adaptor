@@ -72,7 +72,7 @@ export function createSignatureBaseString(params, headersList, rawBody) {
 }
 
 // Hardcoded Public Key - REPLACE WITH THE ACTUAL PUBLIC KEY FOR TESTING ONLY
-const HARDCODED_PUBLIC_KEY = "PASTE_THE_SENDER'S_PUBLIC_KEY_HERE";
+// const HARDCODED_PUBLIC_KEY = "PASTE_THE_SENDER'S_PUBLIC_KEY_HERE";
 
 export async function verifyOndcSignature(req) {
   try {

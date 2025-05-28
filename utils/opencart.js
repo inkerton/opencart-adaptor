@@ -3,9 +3,7 @@ import FormData from "form-data";
 import logger from "./logger.js";
 
 // --- OpenCart Configuration ---
-const OPENCART_BASE_URL = process.env.API_BASE;
-const OPENCART_API_USER = process.env.API_USERNAME;
-const OPENCART_API_KEY = process.env.OPENCART_KEY;
+const OPENCART_BASE_URL = process.env.OPENCART_SITE;
 const OPENCART_API_TIMEOUT = parseInt(process.env.OPENCART_API_TIMEOUT || '5000');
 
 export const loginToOpenCart = async (transactionId) => {

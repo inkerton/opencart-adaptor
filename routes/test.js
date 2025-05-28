@@ -7,9 +7,9 @@ router.post('/test-opencart-order', async (req, res) => {
     try {
         // Log environment variables (without sensitive data)
         console.log('Environment check:');
-        console.log('OPENCART_API_URL configured:', !!process.env.OPENCART_API_URL);
+        console.log('OPENCART_SITE url configured:', !!process.env.OPENCART_SITE);
         console.log('OPENCART_USERNAME configured:', !!process.env.OPENCART_USERNAME);
-        console.log('OPENCART_API_KEY configured:', !!process.env.OPENCART_API_KEY);
+        console.log('OPENCART_KEY configured:', !!process.env.OPENCART_KEY);
 
         // Log the incoming request
         console.log('Received request body:', req.body);
@@ -119,9 +119,9 @@ router.get('/test-opencart-connection', async (req, res) => {
             success: result,
             message: result ? 'Successfully connected to OpenCart' : 'Failed to connect to OpenCart',
             config: {
-                apiUrl: process.env.OPENCART_API_URL,
+                apiUrl: process.env.OPENCART_SITE,
                 usernameConfigured: !!process.env.OPENCART_USERNAME,
-                apiKeyConfigured: !!process.env.OPENCART_API_KEY
+                apiKeyConfigured: !!process.env.OPENCART_KEY
             }
         });
     } catch (error) {

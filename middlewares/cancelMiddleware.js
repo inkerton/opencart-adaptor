@@ -73,7 +73,7 @@ const cancelMiddleware = async (req, res, next) => {
 
         try {
           const loginResponse = await axios.post(
-            `${process.env.OPENCART_API_URL}/index.php?route=api/login`,
+            `${process.env.OPENCART_SITE}/index.php?route=api/login`,
             loginData
           );
 

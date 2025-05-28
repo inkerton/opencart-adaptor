@@ -10,7 +10,7 @@ export default async function onIssueStatusHandler(req, res) {
     formData.append("return_id", return_id);
 
     const response = await axios.post(
-      `${process.env.OPENCART_API_URL}/index.php?route=api/allproducts/getReturnStatus`,
+      `${process.env.OPENCART_SITE}/index.php?route=api/allproducts/getReturnStatus`,
       formData,
     );
 

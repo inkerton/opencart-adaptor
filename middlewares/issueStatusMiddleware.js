@@ -59,7 +59,7 @@ export default async function issueStatusMiddleware(req, res, next) {
       console.log(formData);
 
       const response = await axios.post(
-        `${process.env.OPENCART_API_URL}/index.php?route=api/allproducts/checkissueId`,
+        `${process.env.OPENCART_SITE}/index.php?route=api/allproducts/checkissueId`,
         formData
       );
 

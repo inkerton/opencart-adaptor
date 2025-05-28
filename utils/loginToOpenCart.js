@@ -1,7 +1,7 @@
 import axios from 'axios';
 import logger from './logger.js';
 
-const OPENCART_BASE_URL = process.env.OPENCART_BASE_URL;
+const OPENCART_BASE_URL = process.env.OPENCART_SITE;
 const OPENCART_USERNAME = process.env.OPENCART_USERNAME;
 const OPENCART_PASSWORD = process.env.OPENCART_KEY;
 

@@ -23,7 +23,7 @@ export default async function onInitHandler(req, res) {
         for (const item of items) {
           console.log('first', item);
           const productId = item.id;
-          const opencartApiUrl = `${process.env.OPENCART_API_URL}/index.php?route=api/allproducts/productInfo&json&product_id=${productId}`;
+          const opencartApiUrl = `${process.env.OPENCART_SITE}/index.php?route=api/allproducts/productInfo&json&product_id=${productId}`;
     
           const response = await axios.get(opencartApiUrl);
           const productData = response.data;

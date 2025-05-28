@@ -13,7 +13,9 @@ const dbConfig = {
   database: process.env.DB_NAME,
 };
 
-const OPENCART_CANCELED_STATUS_ID = parseInt(process.env.OPENCART_CANCELLED_STATUS_ID || '8');
+// const OPENCART_CANCELED_STATUS_ID = parseInt(process.env.OPENCART_CANCELLED_STATUS_ID || '7');
+const OPENCART_CANCELED_STATUS_ID = parseInt('7');
+
 
 const cancelHandler = async (req, res) => {
   const { body } = req;
@@ -72,8 +74,8 @@ const cancelHandler = async (req, res) => {
         context: {
           ...context,
           action: "on_cancel",
-          bpp_id: process.env.BPP_ID,
-          bpp_uri: process.env.BPP_URI,
+          bpp_id: context?.bpp_id,
+          bpp_uri: context?.bpp_uri,
           timestamp: new Date().toISOString()
         },
         message: {

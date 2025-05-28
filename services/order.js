@@ -5,7 +5,7 @@ import { wrapper } from 'axios-cookiejar-support';
 
 class  createOrder {
   constructor() {
-    this.baseUrl = process.env.OPENCART_API_URL || 'http://localhost/opencart';
+    this.baseUrl = process.env.OPENCART_SITE || 'http://localhost/opencart';
     this.username = process.env.OPENCART_USERNAME || 'demo';
     this.key = process.env.OPENCART_KEY || 'demo';
     this.cookieJar = new CookieJar();

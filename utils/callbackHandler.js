@@ -4,7 +4,7 @@ import { loginToOpenCart } from './opencart.js';
 import axios from 'axios';
 
 // --- OpenCart Configuration ---
-const OPENCART_BASE_URL = process.env.API_BASE;
+const OPENCART_BASE_URL = process.env.OPENCART_SITE;
 const OPENCART_API_TIMEOUT = parseInt(process.env.OPENCART_API_TIMEOUT || '5000');
 
 /**

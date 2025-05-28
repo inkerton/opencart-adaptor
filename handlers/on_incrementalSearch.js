@@ -73,8 +73,8 @@ export default async function on_IncrementalSearchHandler(req, res) {
           context: {
             ...context,
             action: "on_search",
-            bpp_id: process.env.BPP_ID,
-            bpp_uri: process.env.BPP_URI,
+            bpp_id: context?.bpp_id,
+            bpp_uri: context?.bpp_uri,
             timestamp: new Date().toISOString(),
             message_id: crypto.randomUUID(),
           },

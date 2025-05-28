@@ -14,7 +14,7 @@ export default async function onSelectHandler(req, res) {
   
       for (const item of items) {
         const productId = item.id;
-        const opencartApiUrl = `${process.env.OPENCART_API_URL}/index.php?route=api/allproducts/productInfo&json&product_id=${productId}`;
+        const opencartApiUrl = `${process.env.OPENCART_SITE}/index.php?route=api/allproducts/productInfo&json&product_id=${productId}`;
   
         const response = await axios.get(opencartApiUrl);
         const productData = response.data;
@@ -57,8 +57,6 @@ export default async function onSelectHandler(req, res) {
           core_version: payload.context.core_version,
           bap_id: payload.context.bap_id,
           bap_uri: payload.context.bap_uri,
-          bpp_id: process.env.BPP_ID,
-          bpp_uri: process.env.BPP_URI,
           transaction_id: payload.context.transaction_id,
           message_id: payload.context.message_id,
           city: payload.context.city,

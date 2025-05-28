@@ -21,7 +21,7 @@ export default async function confirmMiddleware(req, res, next) {
         loginData.append("key", process.env.OPENCART_KEY);
 
         const loginResponse = await axios.post(
-          `${process.env.OPENCART_API_URL}/index.php?route=api/login`,
+          `${process.env.OPENCART_SITE}/index.php?route=api/login`,
           loginData,
           {
             timeout: 5000,

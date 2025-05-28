@@ -46,7 +46,7 @@ export default async function onIssueHandler(req, res) {
     formData.append("return_status_id", return_status_id);
 
     const response = await axios.post(
-      `${process.env.OPENCART_API_URL}/index.php?route=api/allproducts/addReturn`,
+      `${process.env.OPENCART_SITE}/index.php?route=api/allproducts/addReturn`,
       formData
     );
 
@@ -57,8 +57,8 @@ export default async function onIssueHandler(req, res) {
         ...context,
         action: "on_issue",
         timestamp: new Date().toISOString(),
-        bpp_id: process.env.BPP_ID,
-        bpp_uri: process.env.BPP_URI,
+        bpp_id: context?.bpp_id,
+        bpp_uri: context?.bpp_uri,
       },
       message: {
         issue: {
